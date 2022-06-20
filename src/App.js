@@ -4,14 +4,23 @@ import Header from './MyComponents/Header';
 import { Todos } from './MyComponents/Todos';
 import { AddTodo } from './MyComponents/AddTodo';
 import { Footer } from './MyComponents/Footer';
-import React, { useState } from 'react';  // useState hook
+import { About } from './MyComponents/About';
+import React, { useState, useEffect } from 'react';  // useState hook
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Routes,
+  Link
+} from "react-router-dom";
+
 
 function App() {
   // when the app is initialised, check for existing todos from the local storage
   let initTodo;
-  if(localStorage.getItem("todos")){  // if NULL
+  if (localStorage.getItem("todos") === null) {  // if NULL
     initTodo = []  // initialise an empty array
-  }else{
+  } else {
     initTodo = JSON.parse(localStorage.getItem("todos"))
   }
   const onDelete = (todo) => {
@@ -24,6 +33,7 @@ function App() {
     setTodos(todos.filter((e) => {
       return e !== todo;
     }))
+    console.log("Deleted: ", todos)
     localStorage.setItem("todos", JSON.stringify(todos))
   }
   // add todo with their title and desc to todos list
@@ -31,10 +41,10 @@ function App() {
     console.log("addTodo Working for ", title, desc)
     let sno;  // define sno at global block level
     // if there is no prior todo
-    if (todos.length == 0) {
+    if (todos.length === 0) {
       sno = 0  // set sno(todo)=0
     } else {  // set todo sno as formula
-      let sno = todos[todos.length - 1].sno + 1  // serial number of ({serial number of last todo}+1)
+      sno = todos[todos.length - 1].sno + 1  // serial number of ({serial number of last todo}+1)
     }
     const myTodo = {
       sno: sno,
@@ -46,11 +56,9 @@ function App() {
     setTodos([...todos, myTodo])  // add new todo to existing array of todos
     console.log(myTodo)  // display myTodo
 
-    // save todo to local storage as they are added
-      localStorage.setItem("todos", JSON.stringify(todos))  // set todos to "todos"
   }
 
-  /* default manually added todos
+  /*  // default manually added todos
   const [todos, setTodos] = useState([  // setTodos is a function to update todos
       {
         sno: 1,
@@ -72,12 +80,15 @@ function App() {
 
   // using local storage to store and retrieve todos
   // when the app is initialised
-  const [todos, setTodos] = useState([initTodo]);  // pass empty array to todos
-
+  const [todos, setTodos] = useState(initTodo);  // pass empty array to todos
+  useEffect(() => {  // saves todos to local storage
+    // save todo to local storage as they are added
+    localStorage.setItem("todos", JSON.stringify(todos))  // set todos to "todos"
+  }, [todos])  // as soon as todos is changed, run above useEffect
   return (
     <>
-      <Header title="Todos List App" searchBar={false} />
-      <AddTodo addTodo={addTodo} />
+      <Header title="Todos List" searchBar={false} />
+      <AddTodo AddTodo={addTodo} />
       <Todos todos={todos} onDelete={onDelete} />
       <Footer />
     </>

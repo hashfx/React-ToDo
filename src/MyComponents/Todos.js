@@ -3,7 +3,8 @@ import { TodoItem } from "../MyComponents/TodoItem"
 
 export const Todos = (props) => {
   let myStyle = {
-    minHeight: "70vh"
+    minHeight: "70vh",
+    margin: "40px auto"
   }
   return (
     <div className="container my-3" style={myStyle}>
@@ -13,12 +14,9 @@ export const Todos = (props) => {
       {props.todos.length === 0 ? "No Todo Items Available" :
         // if not available, render todos
         props.todos.map((todo) => {
-          return (
-            <>
-              <TodoItem todo={todo} key={todo.sno} onDelete={props.onDelete} />
-              <hr />
-            </>
-          )
+          console.log(todo.sno);
+          return (<TodoItem todo={todo} key={todo.sno} onDelete={props.onDelete} />)
+
         })}
 
     </div>
