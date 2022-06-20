@@ -11,7 +11,6 @@ import {
   Switch,
   Route,
   Routes,
-  Link
 } from "react-router-dom";
 
 
@@ -89,23 +88,19 @@ function App() {
     <>
       <Router>
         <Header title="Todos List" searchBar={false} />
-        <Switch>
-          <Route path='/' render={() => {
+        <Routes>
+          <Route exact path="/" render={() => {
             return (
               <>
-                <AddTodo addTodo={addTodo} />
+                <AddTodo AddTodo={addTodo} />
                 <Todos todos={todos} onDelete={onDelete} />
               </>
             )
-          }}>  // to be rendered only when path is /
+          }}>
 
           </Route>
-          <Route path='/about'>
-            <About />
-          </Route>
-        </Switch>
-
-
+          <Route exact path="about" element={<About />} />
+        </Routes>
         <Footer />
       </Router>
     </>
