@@ -89,7 +89,7 @@ function App() {
       <Router>
         <Header title="Todos List" searchBar={false} />
         <Routes>
-          <Route exact path="/" render={() => {
+          <Route index path="/" render={() => {
             return (
               <>
                 <AddTodo AddTodo={addTodo} />
