@@ -87,10 +87,27 @@ function App() {
   }, [todos])  // as soon as todos is changed, run above useEffect
   return (
     <>
-      <Header title="Todos List" searchBar={false} />
-      <AddTodo AddTodo={addTodo} />
-      <Todos todos={todos} onDelete={onDelete} />
-      <Footer />
+      <Router>
+        <Header title="Todos List" searchBar={false} />
+        <Switch>
+          <Route path='/' render={() => {
+            return (
+              <>
+                <AddTodo addTodo={addTodo} />
+                <Todos todos={todos} onDelete={onDelete} />
+              </>
+            )
+          }}>  // to be rendered only when path is /
+
+          </Route>
+          <Route path='/about'>
+            <About />
+          </Route>
+        </Switch>
+
+
+        <Footer />
+      </Router>
     </>
   );
 }
