@@ -85,11 +85,12 @@ function App() {
     localStorage.setItem("todos", JSON.stringify(todos))  // set todos to "todos"
   }, [todos])  // as soon as todos is changed, run above useEffect
   return (
+    // fixme: home or / not rendered
     <>
       <Router>
         <Header title="Todos List" searchBar={false} />
         <Routes>
-          <Route index path="/" render={() => {
+          <Route path="/" render={() => {
             return (
               <>
                 <AddTodo AddTodo={addTodo} />
@@ -99,7 +100,7 @@ function App() {
           }}>
 
           </Route>
-          <Route exact path="about" element={<About />} />
+          <Route exact path="/about" element={<About />} />
         </Routes>
         <Footer />
       </Router>
